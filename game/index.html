@@ -643,7 +643,7 @@ function timer(){
 // Add function to fetch top scores from the server
 async function fetchTopScores() {
     try {
-        const response = await fetch('http://localhost:3000/scores');
+        const response = await fetch('https://duckduckgooose.onrender.com/:3000/scores');
         const topScores = await response.json();
         console.log('Top scores response:', topScores); // Debugging: Log the response
 
@@ -663,7 +663,7 @@ async function fetchTopScores() {
     // Add function to submit the player's score to the server
     async function saveScore(score) {
     try {
-        const response = await fetch('http://localhost:3000/scores', {
+        const response = await fetch('https://duckduckgooose.onrender.com:3000/scores', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ score: score }),
