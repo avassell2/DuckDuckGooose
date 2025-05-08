@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duck, Duck, Goose!</title>
+    <style>
+        body {
+            position: relative;
+            display: grid;
+            place-items: center;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+           
+            background-size: cover;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-repeat:no-repeat;
+            overflow: hidden;
+           
+        }
+
+        
+
+
+
+        .queue-container {
+            display: grid;
+            place-items: center;
+    margin-top:15%;
+    bottom: 0%;
+  position: sticky;
+    padding: 10px;
+  
+    border-radius: 8px;
+    
+    
+    perspective: 800px; /* Enable 3D depth effect */
+    rotate: -90deg;
+    
+
+           
+        }
+
+        .queue-item-duck-example {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            
+            
+            color: #fff;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            background-image: url(assets/duck.png);
+            background-color: #ffffff;
+            background-size: cover;
+            rotate: -90deg;
+            margin-top: auto;
+            position: relative;
+            right: 110%; 
+            top: 90%;
+            
+        }
+        
+        .queue-item-duck-blue-example {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            margin-top: auto;
+            position: relative;
+            left: 110%;
+            top: 90%;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            background-image: url(assets/goose3.png);
+            background-color: #ffffff;
+            background-size: cover;
+            rotate: -90deg;
+        }
+       .examples{
+           
+           display: flex;
+        }
+        .queue-item-duck {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+           
+            position: absolute; /* Position items absolutely inside the container */
+            transition: all 0.3s ease; /* Smooth animations when adding/removing items */
+            transform-origin: center; /* Set the transformation anchor point */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0.2, 0); /* Add some depth */ /* Add some depth */
+            color: #fff;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            background-image: url(assets/duck.png);
+       
+            background-size: cover;
+            
+        }
+        
+
+        .queue-item-duck-blue {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            
+            position: absolute; /* Position items absolutely inside the container */
+            transition: all 0.3s ease; /* Smooth animations when adding/removing items */
+            transform-origin: center; /* Set the transformation anchor point */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0.2, 0); /* Add some depth */ /* Add some depth */
+            color: #fff;
+            border-radius: 5px;
+            font-size: 18px;
+            
+            background-image: url(assets/goose3.png);
+         
+            background-size: cover;
+            
+           
+        }
+
+
+        .timebonus {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            height: 150px;
+            
+            position: absolute; /* Position items absolutely inside the container */
+            transition: all 0.3s ease; /* Smooth animations when adding/removing items */
+            transform-origin: center; /* Set the transformation anchor point */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add some depth */
+            color: #fff;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            background-image: url(assets/watch.png);;
+            background-size: cover;
+            transform: rotate(90deg);
+        }
+
+        .gameOverContainer{
+            display: none;
+            background-color: #0000003b;
+            position: absolute;
+           
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+        }
+        
+
+        .gameOverDiv{
+            
+            font-size: 30px;
+            background-color: #f44336;
+            position: absolute;
+            z-index: 999;
+          
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    height:100vh;
+    width:100%;
+            text-align: center;
+            opacity: 90%;
+        }
+        
+
+
+        .queue-item.remove {
+            background-color: #444444;
+        }
+
+        .controls {
+            display: flex;
+            gap: 980px;
+            position: relative;
+            bottom: 10%;
+            margin-bottom: auto;
+            
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #008cba;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #005f75;
+        }
+
+        .Score-container{
+           
+            text-align: center;
+           
+        }
+
+        .Combo-container{
+           
+            text-align: center;
+          
+        }
+        .values{
+            display: flex;
+            gap: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            left: 2%;
+            position: relative;
+        }
+
+        .heart-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+           
+            padding: 10px;
+            border: 2px solid #555;
+            border-radius: 8px;
+            min-width: 300px;
+            min-height: 60px;
+            background-color: #fff;
+            margin-bottom: 2%;
+        }
+        .heart{
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+        }
+
+        .head{
+           
+           top: 2%;
+           position: relative;
+           
+          
+
+}
+    </style>
+
+<body id="body" style="background-image: url('assets/bg.png');">
+    <h1 class="head">Duck, Duck, Goose!</h1>
+
+<div class="values">
+    <div class="Score-container">
+        <h1>Score</h1>
+        <h2 id="score">0</h2>
+    </div>
+
+    <div id="safeTimer">
+        <h1>Timer</h1>
+        <h1 id="safeTimerDisplay">00:40</h1>
+        </div>
+
+    <div class="Combo-container">
+        <h1>Max Combo</h1>
+        <h2 id="max-combo">0</h2>
+        <h1>Combo</h1>
+        <h2 id="combo">0</h2>
+    </div>
+
+    
+</div>
+
+
+
+    
+<div class="examples">
+    <div class="queue-item-duck-example"></div>
+    <div class="queue-item-duck-blue-example"></div>
+
+</div>
+
+
+<div class="gameOverContainer" id="gameoverCon">
+<div class="gameOverDiv" id="gameOverDiv">
+    <h1 id="gameOverText">Game Over</h1>
+    <h3>Top Scores</h3>
+    <ol id="topScores"></ol>
+    <button id="restartBtn">Restart Game</button>
+</div>
+</div>
+
+    <div class="queue-container" id="queue"></div>
+
+    <div class="controls">
+       
+        <input type="image" src="assets/leftkey.png" />
+        <input type="image" src="assets/rightkey.png" />
+       
+    </div>
+
+    <div class="heart-container" id="queue">
+        <img class="heart" src="assets/heart.png" alt="life1" id="life1">
+        <img class="heart" src="assets/heart.png" alt="life2" id="life2">
+        <img class="heart" src="assets/heart.png" alt="life3" id="life3">
+
+    </div>
+</body>
+    
+
+    <script>
+        document.getElementById('safeTimer').onload = timer();
+
+
+
+        // Initial queue array
+        const queue = [];
+        const queueContainer = document.getElementById('queue');
+
+
+        const score = document.getElementById('score');
+        const scoreText = score.textContent; // grabs "0" from the val span
+        let scoreNum = Number(scoreText); // converts "0" to numeric 0
+   // adds 1 to valNum changing it from 0 to 1
+      
+   let opacity = 1;
+   let trans =0;
+
+  const maxcombo = document.getElementById('max-combo');
+        const maxcomboText = maxcombo.textContent; // grabs "0" from the val span
+        let maxcomboNum = Number(maxcomboText); // converts "0" to numeric 0
+  maxcomboNum = 0; // adds 1 to valNum changing it from 0 to 1
+  maxcombo.textContent = maxcomboNum; // puts it back in the HTML
+
+  const combo = document.getElementById('combo');
+        const comboText = combo.textContent; // grabs "0" from the val span
+        let comboNum = Number(comboText); // converts "0" to numeric 0
+  comboNum = 0; // adds 1 to valNum changing it from 0 to 1
+  combo.textContent = comboNum; // puts it back in the HTML
+
+  let lives = 3; //number of lives, player starts with 3 hearts
+  var sec = 40;
+  let pos_top = 0;
+  let pos_bottom =0;
+
+
+        let itemCounter = 1; // Counter to label items
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        document.addEventListener("keydown", function(event) {
+            var snd = new Audio("assets/quack.wav"); // buffers automatically when created
+        if(event.key == "ArrowLeft" || event.key =="ArrowRight"){ // Only detect right or left arrow keys
+         if (event.key == "ArrowLeft" && queue[0].element.className == 'queue-item-duck' && lives > 0 && sec > 0){ //check if first element in stack is a green duck 
+            
+            dequeue();
+            snd.play();
+            scoreNum += 1;
+            score.textContent = scoreNum; // puts it back in the HTML
+            
+            comboNum += 1;
+            combo.textContent = comboNum; // puts it back in the HTML
+         }  else if (event.key == "ArrowRight" && queue[0].element.className == 'queue-item-duck-blue'  && lives > 0 && sec > 0){ //check if first element in stack is a blue duck ){
+            dequeue();
+            snd.play();
+            scoreNum += 1;
+            score.textContent = scoreNum; // puts it back in the HTML
+            
+            comboNum += 1;
+            combo.textContent = comboNum; // puts it back in the HTML
+         }
+            else if ((event.key == "ArrowLeft" ) && queue[0].element.className == 'timebonus'  && lives > 0 && sec > 0){
+                sec += 4;
+                pos_bottom = 1;
+                dequeue();
+
+            }
+            else if ((event.key =="ArrowRight") && queue[0].element.className == 'timebonus'  && lives > 0 && sec > 0){
+                sec += 4;
+                pos_top = 1;
+                dequeue();
+
+            }
+          else{
+            if(opacity  == 1){
+            lives -= 1;
+            lifeCheck(lives);
+            if(comboNum > maxcomboNum){
+                maxcomboNum = comboNum;
+            }
+            
+            maxcombo.textContent = maxcomboNum; // puts it back in the HTML
+            comboNum = 0;
+            combo.textContent = comboNum; // puts it back in the HTML
+        }
+         }
+        }
+      });
+        // Function to add item to the queue
+        function enqueue() {
+            // Create a new item and add it to the queue array
+            const newItem = {
+                id: itemCounter,
+                element: document.createElement('div')
+            };
+
+            var computerResponse = getRandomInt(1, 105);
+
+            if(computerResponse >= 5 && computerResponse < 55){
+                newItem.element.className = 'queue-item-duck';
+            }
+
+            if(computerResponse >= 55 && computerResponse <= 105){
+                newItem.element.className = 'queue-item-duck-blue';
+            }
+
+            if(computerResponse >= 1 && computerResponse < 5){
+                newItem.element.className = 'timebonus';
+            }
+            
+            // Add fade-in effect
+    newItem.element.style.opacity = '0';
+    setTimeout(() => {
+        newItem.element.style.opacity = '1';
+    }, 100);
+
+            //newItem.element.innerText = itemCounter++;
+            queue.push(newItem);
+            renderQueue();
+        }
+
+        // Function to remove item from the queue
+        function dequeue() {
+           
+            if (queue.length === 0) {
+                alert('Queue is empty!');
+                return;
+            }
+
+           // Remove the first item with a fade-out animation
+           
+           requestAnimationFrame(fade);
+           
+    
+    //dequeuedItem.element.style.transform = 'scale(0)'; // Shrink and fade out
+    
+    
+    setTimeout(() => {
+        
+        renderQueue(); // Re-render the queue after animation
+    }, 100);
+            
+            enqueue();
+        }
+
+        function fade() {
+            
+            
+         if (opacity  <= 0) {
+           
+            opacity =1;
+             queue.shift();
+            trans = 0;
+            pos_top = 0;
+            pos_bottom =0;
+            
+         
+            return;
+         }
+         
+         opacity -= 0.11;  
+    
+         
+         queue[0].element.style.opacity  = opacity;
+         trans += 5;
+         
+
+         if(queue[0].element.className == 'queue-item-duck' || ((queue[0].element.className == 'timebonus' ) && pos_bottom != 0)){
+            queue[0].element.style.bottom  = trans+"px";
+          
+         }
+         else if(queue[0].element.className == 'queue-item-duck-blue' || ((queue[0].element.className == 'timebonus') && pos_top != 0)) {
+            queue[0].element.style.top  = trans+"px";
+          
+         }
+        
+        // alert(queue[0].element.style.top );
+         requestAnimationFrame(fade);
+      }
+
+        // Function to render the queue
+        function renderQueue() {
+    // Clear the current queue display
+    queueContainer.innerHTML = '';
+
+    // Define the base position and spacing
+    const itemSpacing = 20; // Space between items (adjust as needed)
+
+    queue.forEach((item, index) => {
+        // Calculate position and scaling
+        const scale = 1 - index * 0.02; // Reduce size by 10% per item
+        const translateX = index * itemSpacing; // Space items evenly
+        const zIndex = queue.length - index; // Higher z-index for items in front
+
+        // Style the item for depth effect
+        item.element.style.transform = `translateX(${translateX}px) scale(${scale})`;
+        item.element.style.zIndex = zIndex;
+        item.element.style.opacity = scale; // Faded effect for items in the back
+
+        // Add the item to the container
+        queueContainer.appendChild(item.element);
+    });
+}
+
+        function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function lifeCheck(life) {
+    var snd = new Audio("assets/damage.mp3"); // buffers automatically when created
+    // Change the heart images as lives decrease
+    if (life === 2 && sec > 0) {
+                document.getElementById('life1').src = 'assets/black-heart.png';
+                snd.play();
+            } else if (life === 1 && sec > 0) {
+                document.getElementById('life2').src = 'assets/black-heart.png';
+                snd.play();
+            } else if (life === 0 && sec > 0) {
+                document.getElementById('life3').src = 'assets/black-heart.png';
+                snd.play();
+               
+                gameover();
+            }
+}
+
+function gameover(){
+    document.getElementById('gameoverCon').style.display = 'block'; // Show Game Over message
+    saveScore(scoreNum).then(fetchTopScores);
+    //document.body.style.backgroundColor = "#4444446c";
+}
+function restartGame(){
+    lives = 3;
+    itemCounter = 0;
+
+    scoreNum = 0;
+    comboNum = 0;
+    maxcomboNum = 0;
+
+    maxcombo.textContent = maxcomboNum; // puts it back in the HTML
+    score.textContent= scoreNum;        
+    combo.textContent = comboNum; // puts it back in the HTML
+
+    sec = 40;
+    //document.getElementById('safeTimerDisplay').textContent = '00:40';
+
+    timer();
+
+     // Reset the heart images to original (not blacked-out)
+     document.getElementById('life1').src = 'assets/heart.png';
+     document.getElementById('life2').src = 'assets/heart.png';
+     document.getElementById('life3').src = 'assets/heart.png';
+
+     //hide game over screen
+     document.getElementById('gameoverCon').style.display ='none';
+
+     //clear and reinitialize queue
+     queue.length = 0;
+
+     enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        enqueue();
+        
+        
+}
+
+function timer(){
+    
+    var timer = setInterval(function(){
+        document.getElementById('safeTimerDisplay').innerHTML='00:'+sec;
+        sec--;
+        if (sec <= 0 || (lives < 1 && sec > 0)) {
+            clearInterval(timer);
+            gameover();
+        }
+    }, 1000);
+}
+
+
+// Add function to fetch top scores from the server
+async function fetchTopScores() {
+    try {
+        const response = await fetch('http://localhost:3000/scores');
+        const topScores = await response.json();
+        console.log('Top scores response:', topScores); // Debugging: Log the response
+
+        const topScoresList = document.getElementById('topScores');
+        topScoresList.innerHTML = ''; // Clear the existing list
+
+        topScores.forEach((scoreObj, index) => {
+            const listItem = document.createElement('h1');
+            listItem.textContent = `#${index + 1}: ${scoreObj.score}`; // Extract the score field
+            topScoresList.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error('Error fetching top scores:', error);
+    }
+}
+
+    // Add function to submit the player's score to the server
+    async function saveScore(score) {
+    try {
+        const response = await fetch('http://localhost:3000/scores', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ score: score }),
+        });
+        const data = await response.json();
+        console.log("Score saved successfully:", data);
+    } catch (error) {
+        console.error("Error saving score:", error);
+    }
+}
+
+document.getElementById('restartBtn').addEventListener('click', restartGame);
+
+    </script>
+</body>
+</html>
